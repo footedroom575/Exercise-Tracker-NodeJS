@@ -147,7 +147,7 @@ function isValidDate(from, to, date){
 }
 
 
-let findAllExercisesLog =  (filter, userData, to, form)=>{
+let findAllExercisesLog =  (filter, userData, to, from, limit)=>{
 
   let shouldCheck = false
   shouldCheck = (!to || !from)? false: true
@@ -168,7 +168,7 @@ let findAllExercisesLog =  (filter, userData, to, form)=>{
           this.duration =  duration
           this.date =  new Date(dated).toDateString()
         }
-        result.logs = data.reduce((all, ex)=>{
+        result.log = data.reduce((all, ex)=>{
           if ( shouldCheck && isValidDate(from, to, ex.date) ){
             let temp = new temp_obj(ex.description, ex.duration, ex.date)
             all.push(temp)
@@ -178,6 +178,10 @@ let findAllExercisesLog =  (filter, userData, to, form)=>{
           }
           return all
         }, [])
+
+        if (limit){
+          result.logs.length = limit
+        }
 
     resolve(result); // when successful
   }})
@@ -189,7 +193,7 @@ app.get("/api/users/:_id/logs", (req, res)=>{
     if (err)
       res.json("Error getting users!")
     else {
-      findAllExercisesLog({userId: req.params._id}, userData, req.params.to, req.params.from)
+      findAllExercisesLog({userId: req.params._id}, userData, req.params.to, req.params.from, req.params.limit)
       .then((log, err)=>{
         if (err)
           res.json(err)
