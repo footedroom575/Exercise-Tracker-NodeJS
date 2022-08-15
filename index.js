@@ -159,7 +159,6 @@ let findAllExercisesLog =  (filter, userData, to, from, limit)=>{
         reject("Error getting exercises")
       } else {
         let result = {}
-        result.count = data.length
         result.username = userData.username
         result._id = userData._id
 
@@ -172,28 +171,33 @@ let findAllExercisesLog =  (filter, userData, to, from, limit)=>{
           if ( shouldCheck && isValidDate(from, to, ex.date) ){
             let temp = new temp_obj(ex.description, ex.duration, ex.date)
             all.push(temp)
-          } else {
+          } else if (!shouldCheck){
             let temp = new temp_obj(ex.description, ex.duration, ex.date)
             all.push(temp)
           }
           return all
         }, [])
+        result.count = result["log"].length
 
-        if (limit){
-          result.logs.length = limit
+        if (limit && result["log"].length > limit){
+          console.log(limit, "--=-==")
+          result["log"].length = +limit
+          result.count = +limit
         }
+        // console.log(limit, "====", typeof limit)
 
     resolve(result); // when successful
   }})
 })}
   
 app.get("/api/users/:_id/logs", (req, res)=>{
+  // console.log(req.query, "-=")
 
   User.findById(req.params._id, (err, userData)=>{
     if (err)
       res.json("Error getting users!")
     else {
-      findAllExercisesLog({userId: req.params._id}, userData, req.params.to, req.params.from, req.params.limit)
+      findAllExercisesLog({userId: req.params._id}, userData, req.query.to, req.query.from, req.query.limit)
       .then((log, err)=>{
         if (err)
           res.json(err)
