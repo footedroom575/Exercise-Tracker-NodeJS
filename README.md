@@ -25,7 +25,7 @@ Also add your own MONGODB_URI for accessing the database.
 
 # To Start:
 
-Executed following command:
+Execute following command:
 
 
 `npm start`
