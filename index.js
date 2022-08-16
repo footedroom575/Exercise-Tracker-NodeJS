@@ -60,10 +60,8 @@ function addUser(user, res) {
 
       if (err){
 
-        // output(err, data)
         res.json({error: err})
       } else {
-        // output(err, data)
         res.json(data)
       }
       
@@ -124,7 +122,6 @@ app.post("/api/users/:_id/exercises", (req, res)=>{
         delete data["userId"]
     
         if (err){
-          // output(err, data)
           res.json({error: err})
         } else {
           res.json(data)
@@ -184,14 +181,12 @@ let findAllExercisesLog =  (filter, userData, to, from, limit)=>{
           result["log"].length = +limit
           result.count = +limit
         }
-        // console.log(limit, "====", typeof limit)
 
     resolve(result); // when successful
   }})
 })}
   
 app.get("/api/users/:_id/logs", (req, res)=>{
-  // console.log(req.query, "-=")
 
   User.findById(req.params._id, (err, userData)=>{
     if (err)
