@@ -1,7 +1,7 @@
 {
-	"name": "fcc-exercise-tracker",
+	"name": "Exercise Tracker NodeJS",
 	"version": "0.1.0",
-	"description": "A REST API project, part of Free Code Camp's curriculum",
+	"description": "A REST API project, stores exercise related data and provides flexible API endpoints to access and manage logs, exercises, users, etc",
 	"main": "index.js",
 	"scripts": {
 		"start": "node index.js"
@@ -13,7 +13,7 @@
 		"express": "^4.16.4"
 	},
 	"repository": {
-		"url": "https://github.com/freeCodeCamp/boilerplate-project-exercisetracker"
+		"url": "https://github.com/footedroom575/Exercise-Tracker-NodeJS"
 	},
 	"license": "MIT",
 	"keywords": [
